@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda & Registro di Banco 360° - Vintage Bartender Guild</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Roboto+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg-parchment: #f4ebd9;
+            --card-bg: #fdfaf3;
+            --ink-black: #1c1917;
+            --border-vintage: #8c7355;
+            --accent-copper: #c85a17;
+            --accent-gold: #b8860b;
+            --green-ink: #2e6f40;
+            --orange-ink: #d97706;
+            --red-ink: #991b1b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-parchment);
+            background-image: radial-gradient(#e8d8be 1px, transparent 0);
+            background-size: 24px 24px;
+            color: var(--ink-black);
+            font-family: 'Playfair Display', Georgia, serif;
+            padding: 25px 15px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 3px double var(--border-vintage);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .title-container h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            letter-spacing: 1.5px;
+            color: var(--ink-black);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            font-style: italic;
+            color: #554838;
+            margin-top: 4px;
+        }
+
+        .actions-top {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: var(--ink-black);
+            color: var(--bg-parchment);
+            border: 1px solid var(--border-vintage);
+            padding: 10px 18px;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+            border-radius: 2px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.15);
+        }
+
+        button:hover {
+            background-color: var(--accent-copper);
+            color: #ffffff;
+        }
+
+        button.btn-outline {
+            background-color: transparent;
+            color: var(--ink-black);
+            border: 2px solid var(--border-vintage);
+        }
+
+        button.btn-outline:hover {
+            background-color: var(--ink-black);
+            color: var(--bg-parchment);
+        }
+
+        .btn-ack {
+            background-color: var(--accent-copper);
+            color: #ffffff;
+            width: 100%;
+            padding: 12px;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            margin-top: 20px;
+            border-radius: 2px;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background: var(--card-bg);
+            padding: 18px;
+            border: 1px solid var(--border-vintage);
+            box-shadow: 3px 3px 0px rgba(140, 115, 85, 0.2);
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #4a3f31;
+        }
+
+        input[type="text"], input[type="date"], select, textarea {
+            padding: 8px;
+            border: 1px solid var(--border-vintage);
+            background-color: #fffefb;
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            color: var(--ink-black);
+            border-radius: 2px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2col { grid-template-columns: 1fr; }
+        }
+
+        .block-card {
+            border: 1px solid var(--border-vintage);
+            background-color: var(--card-bg);
+            box-shadow: 3px 3px 0px rgba(140, 115, 85, 0.2);
+            margin-bottom: 25px;
+        }
+
+        .block-header {
+            background-color: #e2d4be;
+            border-bottom: 1px solid var(--border-vintage);
+            color: var(--ink-black);
+            padding: 10px 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .block-body {
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #ede2cf;
+            padding: 8px;
+            text-align: left;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            border-bottom: 1px solid var(--border-vintage);
+        }
+
+        td {
+            padding: 8px;
+            border-bottom: 1px dotted var(--border-vintage);
+            vertical-align: middle;
+        }
+
+        input.table-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+        }
+
+        input.table-input:focus {
+            background-color: #fff;
+            outline: 1px solid var(--accent-copper);
+        }
+
+        .status-badge {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .status-green { background-color: var(--green-ink); }
+        .status-orange { background-color: var(--orange-ink); }
+        .status-red { background-color: var(--red-ink); }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dotted var(--border-vintage);
+        }
+
+        .todo-item label {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            font-weight: normal;
+            cursor: pointer;
+            color: var(--ink-black);
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: var(--accent-copper);
+        }
+
+        /* Modal Guide */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 25, 23, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--bg-parchment);
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            border: 2px solid var(--border-vintage);
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--ink-black);
+        }
+
+        .guide-section {
+            margin-bottom: 15px;
+        }
+
+        .guide-section h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            border-bottom: 1px solid var(--border-vintage);
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            color: var(--accent-copper);
+        }
+
+        .guide-section p, .guide-section li {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #2b241c;
+        }
+
+        @media print {
+            body { background: #fff; padding: 0; }
+            button, .actions-top, .modal { display: none !important; }
+            .block-card, .meta-info { border: 1px solid #000 !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="title-container">
+            <h1>Bartender Shift Logbook & Codex</h1>
+            <div class="subtitle">Registro d'Apertura, Laboratorio & Passaggio Consegne a 360°</div>
+        </div>
+        <div class="actions-top">
+            <button class="btn-outline" onclick="openGuide()">📖 Guida Utente</button>
+            <button onclick="window.print()">🖨️ Stampa / Salva PDF</button>
+        </div>
+    </header>
+
+    <!-- Meta Info Turno -->
+    <div class="meta-info">
+        <div class="input-group">
+            <label for="data-turno">Data Turno</label>
+            <input type="date" id="data-turno">
+        </div>
+        <div class="input-group">
+            <label for="tipo-turno">Servizio / Turno</label>
+            <select id="tipo-turno">
+                <option>Apertura / Mattino</option>
+                <option>Intermedio / Spezzato</option>
+                <option>Chiusura / Serale</option>
+                <option>Evento Privato / Masterclass</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="capo-bar">Head Bartender / Chef de Rang</label>
+            <input type="text" id="capo-bar" placeholder="Nome Responsabile">
+        </div>
+        <div class="input-group">
+            <label for="meteo-affluenza">Condizioni & Previsione Coperti</label>
+            <input type="text" id="meteo-affluenza" placeholder="Es. Nuvoloso - Previsione 120 coperti">
+        </div>
+    </div>
+
+    <div class="grid-2col">
+        <!-- Blocco 1: Prep List & Home-mades -->
+        <div class="block-card">
+            <div class="block-header">
+                <span>🧪 Laboratorio Home-Made & Prep List</span>
+            </div>
+            <div class="block-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Preparazione</th>
+                            <th style="width: 90px;">Giacenza</th>
+                            <th style="width: 100px;">Stato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sciroppo di Zucchero Simple (2:1)</td>
+                            <td><input type="text" class="table-input" value="1.5 L"></td>
+                            <td><span class="status-badge status-green"></span> Pronta</td>
+                        </tr>
+                        <tr>
+                            <td>Cordiali / Riduzioni Speziate</td>
+                            <td><input type="text" class="table-input" value="0.4 L"></td>
+                            <td><span class="status-badge status-orange"></span> Da Rifare</td>
+                        </tr>
+                        <tr>
+                            <td>Spremuta Lime / Limone Fresca</td>
+                            <td><input type="text" class="table-input" value="0.3 L"></td>
+                            <td><span class="status-badge status-red"></span> Critico</td>
+                        </tr>
+                        <tr>
+                            <td>Infusi / Tinture Botaniche</td>
+                            <td><input type="text" class="table-input" value="0.2 L"></td>
+                            <td><span class="status-badge status-green"></span> Pronta</td>
+                        </tr>
+                        <tr>
+                            <td>Frutta Essiccata & Garniture</td>
+                            <td><input type="text" class="table-input" value="Piena"></td>
+                            <td><span class="status-badge status-green"></span> Pronta</td>
+                        </tr>
+                        <tr>
+                            <td>Ghiaccio (Cubi, Tritato, Block)</td>
+                            <td><input type="text" class="table-input" value="90%"></td>
+                            <td><span class="status-badge status-green"></span> Pronta</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Blocco 2: Cantina & Spirits -->
+        <div class="block-card">
+            <div class="block-header">
+                <span>🍾 Controllo Spirit & Speed Rail</span>
+            </div>
+            <div class="block-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoria Spirit</th>
+                            <th style="width: 110px;">Stock Banco</th>
+                            <th style="width: 110px;">Note Riordino</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gin (London Dry / Speziati)</td>
+                            <td><input type="text" class="table-input" value="6 Bottiglie"></td>
+                            <td><input type="text" class="table-input" placeholder="Note..."></td>
+                        </tr>
+                        <tr>
+                            <td>Rum (Blanco / Añejo)</td>
+                            <td><input type="text" class="table-input" value="4 Bottiglie"></td>
+                            <td><input type="text" class="table-input" value="Manca Añejo"></td>
+                        </tr>
+                        <tr>
+                            <td>Whisky / Bourbon / Rye</td>
+                            <td><input type="text" class="table-input" value="3 Bottiglie"></td>
+                            <td><input type="text" class="table-input" placeholder="Note..."></td>
+                        </tr>
+                        <tr>
+                            <td>Vermouth & Bitter Cocktail</td>
+                            <td><input type="text" class="table-input" value="5 Bottiglie"></td>
+                            <td><input type="text" class="table-input" placeholder="Note..."></td>
+                        </tr>
+                        <tr>
+                            <td>Tequila / Mezcal</td>
+                            <td><input type="text" class="table-input" value="2 Bottiglie"></td>
+                            <td><input type="text" class="table-input" value="Riordinare Mezcal"></td>
+                        </tr>
+                        <tr>
+                            <td>Liquori Storici & Amari</td>
+                            <td><input type="text" class="table-input" value="8 Bottiglie"></td>
+                            <td><input type="text" class="table-input" placeholder="Note..."></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blocco 3: Checklist Banco & Igiene -->
+    <div class="block-card">
+        <div class="block-header">
+            <span>📋 Checklist Operativa d'Apertura & Chiusura Banco</span>
+        </div>
+        <div class="block-body" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            <div>
+                <strong style="font-family: 'Cinzel', serif; font-size: 11px; color: var(--accent-copper);">APERTURA BANCO</strong>
+                <div class="todo-item"><label><input type="checkbox" checked> Controllo temperatura pozzetti e frighi</label></div>
+                <div class="todo-item"><label><input type="checkbox" checked> Sanitizzazione workstation e strumenti</label></div>
+                <div class="todo-item"><label><input type="checkbox"> Carico ghiaccio e posizionamento attrezzatura</label></div>
+                <div class="todo-item"><label><input type="checkbox"> Controllo BRIX sciroppi e freschezza succhi</label></div>
+            </div>
+            <div>
+                <strong style="font-family: 'Cinzel', serif; font-size: 11px; color: var(--accent-copper);">CHIUSURA BANCO</strong>
+                <div class="todo-item"><label><input type="checkbox"> Pulizia e disinfezione lavabicchieri</label></div>
+                <div class="todo-item"><label><input type="checkbox"> Etichettatura e stoccaggio preparazioni home-made</label></div>
+                <div class="todo-item"><label><input type="checkbox"> Svuotamento e lavaggio pozzetti ghiaccio</label></div>
+                <div class="todo-item"><label><input type="checkbox"> Spegnimento macchine e chiusura generale</label></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-2col">
+        <!-- Blocco 4: Registro Scarti & Breakage -->
+        <div class="block-card">
+            <div class="block-header">
+                <span>⚠️ Registro Scarti, Bottiglie Rotte & Drink Rifatti</span>
+            </div>
+            <div class="block-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Articolo / Drink</th>
+                            <th>Motivo Scarto</th>
+                            <th style="width: 80px;">Quantità</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="table-input" placeholder="Es. Calice Cocktail"></td>
+                            <td><input type="text" class="table-input" placeholder="Es. Caduta in lavaggio"></td>
+                            <td><input type="text" class="table-input" placeholder="1 pz"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="table-input" placeholder="Es. Negroni d'Autore"></td>
+                            <td><input type="text" class="table-input" placeholder="Es. Errore comanda"></td>
+                            <td><input type="text" class="table-input" placeholder="1 drink"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Blocco 5: Contatti Utili & Assistenza -->
+        <div class="block-card">
+            <div class="block-header">
+                <span>📞 Riferimenti Rapidi & Fornitori</span>
+            </div>
+            <div class="block-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Servizio / Fornitore</th>
+                            <th>Riferimento / Telefono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fornitore Ghiaccio / Express</strong></td>
+                            <td><input type="text" class="table-input" value="+39 0831 000000"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Assistenza Impianto Spina / Lavaggio</strong></td>
+                            <td><input type="text" class="table-input" value="+39 340 0000000"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Direzione / Economato</strong></td>
+                            <td><input type="text" class="table-input" value="Interno 102"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blocco 6: Note Turno e Passaggio Consegne -->
+    <div class="block-card">
+        <div class="block-header">
+            <span>📝 Passaggio Consegne & Registro Eventi del Turno</span>
+        </div>
+        <div class="block-body">
+            <div class="input-group">
+                <label for="note-consegne">Anomalie, Prodotti Esauriti, Eventi Speci o Note per il Turno Successivo</label>
+                <textarea id="note-consegne" rows="4" placeholder="Segnala qui l'andamento del turno, eventuali prodotti terminati da richiedere in magazzino o note per i colleghi del turno successivo..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Guida Utente -->
+    <div class="modal" id="guideModal" onclick="closeGuideOnOverlay(event)">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGuide()">✕</button>
+            <h2 style="font-family: 'Cinzel', serif; font-size: 16px; margin-bottom: 15px; border-bottom: 2px solid var(--border-vintage); padding-bottom: 5px;">Manuale Agenda & Registro 360°</h2>
+            
+            <div class="guide-section">
+                <h3>1. Gestione Prep List & BRIX</h3>
+                <p>Controlla lo stato delle preparazioni fresche ed essenze all'inizio del turno. Gli indicatori cromatici ti segnalano se la scorta è sufficiente o se richiede rilavorazione immediata.</p>
+            </div>
+
+            <div class="guide-section">
+                <h3>2. Controllo Scarti & Food Cost</h3>
+                <p>Annota nel registro scarti ogni bottiglia rotta, calice danneggiato o cocktail errored: questo permette di calcolare con precisione i margini reali e ridurre le perdite di magazzino.</p>
+            </div>
+
+            <div class="guide-section">
+                <h3>3. Passaggio Consegne</h3>
+                <p>Compila sempre il box finale prima di chiudere il turno: la continuità tra il team di bar è la chiave per un servizio impeccabile.</p>
+            </div>
+
+            <button class="btn-ack" onclick="closeGuide()">HO CAPITO</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('data-turno').valueAsDate = new Date();
+
+        function openGuide() {
+            document.getElementById('guideModal').style.display = 'flex';
+        }
+
+        function closeGuide() {
+            document.getElementById('guideModal').style.display = 'none';
+        }
+
+        function closeGuideOnOverlay(event) {
+            if (event.target.id === 'guideModal') {
+                closeGuide();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeGuide();
+            }
+        });
+    </script>
+</body>
+</html>
